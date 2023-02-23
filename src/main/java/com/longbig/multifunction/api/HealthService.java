@@ -35,7 +35,7 @@ public class HealthService {
         @RequestParam("timestamp") Integer timestamp,
         @RequestParam("nonce") Integer nonce,
         @RequestParam("echostr") String echostr) throws AesException {
-        String weComAesKey = SystemProperty.getProp("wecom.aes.key", "yhAQMPcKYljPBISkCsCfMtYmGNz6Rm6xYuailKRhVd5");
+        String weComAesKey = SystemProperty.getProp("wecom.aes.key");
         log.info("wecomaesKey:{}", weComAesKey);
 
         byte[] original;
