@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 public class SystemProperty {
 
     public static Charset CHARSET = Charset.forName("utf-8");
+    public static final String token = "vBw5w";
 
     public static String getProp(String key) {
         return System.getProperty(key);

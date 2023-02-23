@@ -57,7 +57,7 @@ public class WeChatService {
         String body = "{\n" +
                 "   \"touser\" : \"" + touser + "\",\n" +
                 "   \"msgtype\" : \"text\",\n" +
-                "   \"agentid\" : 1000003,\n" +
+                "   \"agentid\" : 1000002,\n" +
                 "   \"text\" : {\n" +
                 "       \"content\" : \"" + msg + "\"\n" +
                 "   },\n" +

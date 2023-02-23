@@ -1,9 +1,15 @@
 package com.longbig.multifunction.job;
 
+import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.longbig.multifunction.utils.OkHttpUtils;
+import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -33,7 +39,6 @@ public class JuejinJob {
         log.info("掘金自动签到开始");
         Map<String, String> header = Maps.newHashMap();
         String url = "https://api.juejin.cn/growth_api/v1/check_in";
-        String juejinCookie = "你的cookie";
         RequestBody requestBody = new FormBody.Builder().build();
         String response = OkHttpUtils.post(url, juejinCookie, requestBody, header);
 
@@ -50,9 +55,73 @@ public class JuejinJob {
         log.info("掘金自动抽奖开始");
         Map<String, String> header = Maps.newHashMap();
         String drawUrl = "https://api.juejin.cn/growth_api/v1/lottery/draw";
-        String juejinCookie = "你的cookie";
         RequestBody requestBody = new FormBody.Builder().build();
         String response = OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
         return response;
+    }
+
+    @Scheduled(cron = "0 02 9 1/1 * ?")
+    public void dipLucky() throws Exception {
+        log.info("粘喜气");
+        String history = this.lotteryHistory();
+        Map<String, String> header = Maps.newHashMap();
+        String drawUrl = "https://api.juejin.cn/growth_api/v1/lottery_lucky/dip_lucky";
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(mediaType, "{\"lottery_history_id\":\"" + history + "\"}");
+
+        OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
+    }
+    public String lotteryHistory() throws Exception {
+        log.info("查可粘列表");
+        Map<String, String> header = Maps.newHashMap();
+        String drawUrl = "https://api.juejin.cn/growth_api/v1/lottery_history/global_big";
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(mediaType, "{\"page_no\":1,\"page_size\":5}");
+
+        String response = OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
+        JSONObject jsonObject = JSON.parseObject(response);
+        Object data = jsonObject.get("data");
+        JSONArray lotteries = JSON.parseObject(JSON.toJSONString(data)).getJSONArray("lotteries");
+
+        String s = lotteries.get(0).toString();
+        JSONObject jb = JSON.parseObject(s);
+        return jb.get("history_id").toString();
+    }
+
+
+    @Scheduled(cron = "0 01 9 1/1 * ?")
+    public void collectBugs() throws Exception {
+        log.info("掘金bug收集");
+        JSONArray bugList = this.getBugList();
+        while (Objects.nonNull(bugList) && bugList.size() > 0) {
+            for (Object bug : bugList) {
+                String bugStr = JSON.toJSONString(bug);
+                log.info("开始处理bug: {}", bugStr);
+                collect(bugStr);
+            }
+            bugList = this.getBugList();
+        }
+    }
+
+    public void collect(String body) throws Exception {
+
+        log.info("开始获取bug");
+        Map<String, String> header = Maps.newHashMap();
+        String drawUrl = "https://api.juejin.cn/user_api/v1/bugfix/collect";
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(mediaType, body);
+        OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
+    }
+    public JSONArray getBugList() throws Exception {
+
+        log.info("开始获取bug列表");
+        Map<String, String> header = Maps.newHashMap();
+        String drawUrl = "https://api.juejin.cn/user_api/v1/bugfix/not_collect";
+        RequestBody requestBody = new FormBody.Builder().build();
+        String response = OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
+        JSONObject jsonObject = JSON.parseObject(response);
+        JSONArray data = jsonObject.getJSONArray("data");
+        log.info("获取到的bug列表为: {}", data);
+        return data;
     }
 }
