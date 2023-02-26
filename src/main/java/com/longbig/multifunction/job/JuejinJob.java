@@ -60,6 +60,21 @@ public class JuejinJob {
         return response;
     }
 
+    /**
+     * 掘金自动抽奖2
+     *
+     * @return
+     */
+    @Scheduled(cron = "0 01 9 1/1 * ?")
+    public String juejinDraw2() throws Exception {
+        log.info("掘金自动抽奖开始");
+        Map<String, String> header = Maps.newHashMap();
+        String drawUrl = "https://api.juejin.cn/growth_api/v1/lottery/draw";
+        RequestBody requestBody = new FormBody.Builder().build();
+        String response = OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
+        return response;
+    }
+
     @Scheduled(cron = "0 02 9 1/1 * ?")
     public void dipLucky() throws Exception {
         log.info("粘喜气");
