@@ -1,12 +1,15 @@
 package com.longbig.multifunction.job;
 
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
+import com.longbig.multifunction.service.WeChatService;
 import com.longbig.multifunction.utils.OkHttpUtils;
 import java.util.Objects;
+import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -28,6 +31,10 @@ public class JuejinJob {
 
     @Value("${juejin.Cookie}")
     private String juejinCookie;
+    @Value("${draw.to.user}")
+    private String drawToUser;
+
+    @Resource private WeChatService weChatService;
 
     /**
      * 掘金自动签到
@@ -37,11 +44,13 @@ public class JuejinJob {
     @Scheduled(cron = "0 0 9 1/1 * ?")
     public String juejinSign() throws Exception {
         log.info("掘金自动签到开始");
+        Integer beforePoint = getCurPoint();
         Map<String, String> header = Maps.newHashMap();
         String url = "https://api.juejin.cn/growth_api/v1/check_in";
         RequestBody requestBody = new FormBody.Builder().build();
         String response = OkHttpUtils.post(url, juejinCookie, requestBody, header);
-
+        Integer afterPoint = getCurPoint();
+        weChatService.sendMsg("签到结果:" + beforePoint + " -> " + afterPoint, drawToUser);
         return response;
     }
 
@@ -50,28 +59,20 @@ public class JuejinJob {
      *
      * @return
      */
-    @Scheduled(cron = "0 0 9 1/1 * ?")
+    @Scheduled(cron = "0 0 9,11 * * ?")
     public String juejinDraw() throws Exception {
         log.info("掘金自动抽奖开始");
+        Integer beforePoint = getCurPoint();
         Map<String, String> header = Maps.newHashMap();
         String drawUrl = "https://api.juejin.cn/growth_api/v1/lottery/draw";
         RequestBody requestBody = new FormBody.Builder().build();
         String response = OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
-        return response;
-    }
-
-    /**
-     * 掘金自动抽奖2
-     *
-     * @return
-     */
-    @Scheduled(cron = "0 01 9 1/1 * ?")
-    public String juejinDraw2() throws Exception {
-        log.info("掘金自动抽奖开始");
-        Map<String, String> header = Maps.newHashMap();
-        String drawUrl = "https://api.juejin.cn/growth_api/v1/lottery/draw";
-        RequestBody requestBody = new FormBody.Builder().build();
-        String response = OkHttpUtils.post(drawUrl, juejinCookie, requestBody, header);
+        JSONObject jb = JSON.parseObject(response);
+        Object data = jb.get("data");
+        String lottery_name = (String) JSON.parseObject(JSON.toJSONString(data)).get("lottery_name");
+        Integer afterPoint = getCurPoint();
+        weChatService.sendMsg(DateUtil.now() + "抽奖奖品:" + lottery_name
+            + "\br抽奖结果:" + beforePoint + " -> " + afterPoint, drawToUser);
         return response;
     }
 
@@ -138,5 +139,14 @@ public class JuejinJob {
         JSONArray data = jsonObject.getJSONArray("data");
         log.info("获取到的bug列表为: {}", data);
         return data;
+    }
+
+    public Integer getCurPoint() throws Exception {
+        log.info("开始获取当前积分数量");
+        Map<String, String> header = Maps.newHashMap();
+        String url = "https://api.juejin.cn/growth_api/v1/get_cur_point";
+        String response = OkHttpUtils.get(url, juejinCookie, header);
+        JSONObject jsonObject = JSON.parseObject(response);
+        return (Integer) jsonObject.get("data");
     }
 }

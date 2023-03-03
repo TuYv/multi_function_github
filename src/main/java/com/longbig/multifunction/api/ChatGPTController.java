@@ -2,9 +2,12 @@ package com.longbig.multifunction.api;
 
 import com.longbig.multifunction.config.BaseConfig;
 import com.longbig.multifunction.dto.WechatXmlDTO;
+import com.longbig.multifunction.job.JuHeJob;
 import com.longbig.multifunction.model.wechat.aes.WXBizMsgCrypt;
 import com.longbig.multifunction.service.ChatGptService;
 import com.longbig.multifunction.service.WeChatService;
+import java.util.Objects;
+import javax.annotation.Resource;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +34,7 @@ public class ChatGPTController {
     private ChatGptService chatGptService;
     @Autowired
     private WeChatService weChatService;
+    @Resource private JuHeJob juHeJob;
 
     private Executor executor = Executors.newCachedThreadPool();
 
@@ -79,9 +83,13 @@ public class ChatGPTController {
                 public void run() {
                     String fromUser = StringUtils.substringBetween(xmlcontent, "<FromUserName><![CDATA[", "]]></FromUserName>");
                     // 调openai
-                    String result = chatGptService.openAiComplete(data);
-                    //给微信发消息
-                    String send = weChatService.sendMsg(result, fromUser);
+                    if(data.contains("天气")) {
+                        juHeJob.weatherForecast(fromUser);
+                    } else {
+                        String result = chatGptService.openAiComplete(data);
+                        //给微信发消息
+                        String send = weChatService.sendMsg(result, fromUser);
+                    }
                 }
             });
             return data;

@@ -1,5 +1,6 @@
 package com.longbig.multifunction.service;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.longbig.multifunction.config.BaseConfig;
@@ -45,7 +46,7 @@ public class WeChatService {
     }
 
 
-    public String sendMsg(String msg, String touser) throws Exception {
+    public String sendMsg(String msg, String toUser) throws Exception {
         String accessToken = null;
         try {
             accessToken = getAccessToken();
@@ -55,7 +56,7 @@ public class WeChatService {
         }
         String url = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=" + accessToken;
         String body = "{\n" +
-                "   \"touser\" : \"" + touser + "\",\n" +
+                "   \"touser\" : \"" + toUser + "\",\n" +
                 "   \"msgtype\" : \"text\",\n" +
                 "   \"agentid\" : 1000002,\n" +
                 "   \"text\" : {\n" +
@@ -67,8 +68,8 @@ public class WeChatService {
                 "   \"duplicate_check_interval\": 1800\n" +
                 "}";
         MediaType JSON1 = MediaType.parse("application/json;charset=utf-8");
+        log.info("send msg:{}", body);
         RequestBody requestBody = RequestBody.create(JSON1, body);
-        log.info("send msg:{}", requestBody);
         OkHttpUtils.post(url, "", requestBody, Maps.newHashMap());
         return "success;";
     }

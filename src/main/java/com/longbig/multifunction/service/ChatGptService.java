@@ -34,29 +34,34 @@ public class ChatGptService {
      * @return
      */
     public String openAiComplete(String text) throws Exception {
-        log.info("调用GPT3模型对话,text:{}", text);
-        Map<String, String> header = Maps.newHashMap();
-        String drawUrl = "https://api.openai.com/v1/completions";
-        String cookie = "";
-        header.put("Authorization", "Bearer " + baseConfig.getChatGptApiKey());
-        Map<String, Object> body = Maps.newHashMap();
-        body.put("model", "text-davinci-003");
-        body.put("prompt", text);
-        body.put("max_tokens", 1024);
-        body.put("temperature", 1);
-        MediaType JSON1 = MediaType.parse("application/json;charset=utf-8");
-        RequestBody requestBody = RequestBody.create(JSON1, JSON.toJSONString(body));
+        try {
+            log.info("调用GPT3模型对话,text:{}", text);
+            Map<String, String> header = Maps.newHashMap();
+            String drawUrl = "https://api.openai.com/v1/completions";
+            String cookie = "";
+            header.put("Authorization", "Bearer " + baseConfig.getChatGptApiKey());
+            Map<String, Object> body = Maps.newHashMap();
+            body.put("model", "text-davinci-003");
+            body.put("prompt", text);
+            body.put("max_tokens", 1024);
+            body.put("temperature", 1);
+            MediaType JSON1 = MediaType.parse("application/json;charset=utf-8");
+            RequestBody requestBody = RequestBody.create(JSON1, JSON.toJSONString(body));
 
-        String response = OkHttpUtils.post(drawUrl, cookie, requestBody, header);
-        if (StringUtils.isBlank(response)) {
-            return "访问超时";
+            String response = OkHttpUtils.post(drawUrl, cookie, requestBody, header);
+            if (StringUtils.isBlank(response)) {
+                return "访问超时";
+            }
+            JSONObject jsonObject = JSONObject.parseObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("choices");
+            JSONObject jsonObject1 = (JSONObject) jsonArray.get(0);
+            String result = (String) jsonObject1.get("text");
+            log.info("openAiComplete result:{}", result);
+            return result;
+        } catch (Exception e) {
+            log.info("调用chatGPT失败，报错：{}", e.getMessage());
+            return "调用chatGPT失败";
         }
-        JSONObject jsonObject = JSONObject.parseObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray("choices");
-        JSONObject jsonObject1 = (JSONObject) jsonArray.get(0);
-        String result = (String) jsonObject1.get("text");
-        log.info("openAiComplete result:{}", result);
-        return result;
     }
 
 }
