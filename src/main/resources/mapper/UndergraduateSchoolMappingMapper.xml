@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longbig.multifunction.up.mapper.UndergraduateSchoolMappingMapper">
+  <resultMap id="BaseResultMap" type="com.longbig.multifunction.up.UndergraduateSchoolMapping">
+    <!--@mbg.generated-->
+    <!--@Table undergraduate_school_mapping-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="undergraduate_class_code" jdbcType="VARCHAR" property="undergraduateClassCode" />
+    <result column="undergraduate_class_name" jdbcType="VARCHAR" property="undergraduateClassName" />
+    <result column="undergraduate_subject_code" jdbcType="VARCHAR" property="undergraduateSubjectCode" />
+    <result column="undergraduate_subject_name" jdbcType="VARCHAR" property="undergraduateSubjectName" />
+    <result column="undergraduate_school_name" jdbcType="VARCHAR" property="undergraduateSchoolName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, undergraduate_class_code, undergraduate_class_name, undergraduate_subject_code, 
+    undergraduate_subject_name, undergraduate_school_name, create_time, update_time, 
+    deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from undergraduate_school_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from undergraduate_school_mapping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.longbig.multifunction.up.UndergraduateSchoolMapping" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into undergraduate_school_mapping (undergraduate_class_code, undergraduate_class_name, 
+      undergraduate_subject_code, undergraduate_subject_name, 
+      undergraduate_school_name, create_time, 
+      update_time, deleted)
+    values (#{undergraduateClassCode,jdbcType=VARCHAR}, #{undergraduateClassName,jdbcType=VARCHAR}, 
+      #{undergraduateSubjectCode,jdbcType=VARCHAR}, #{undergraduateSubjectName,jdbcType=VARCHAR}, 
+      #{undergraduateSchoolName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.longbig.multifunction.up.UndergraduateSchoolMapping" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into undergraduate_school_mapping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="undergraduateClassCode != null">
+        undergraduate_class_code,
+      </if>
+      <if test="undergraduateClassName != null">
+        undergraduate_class_name,
+      </if>
+      <if test="undergraduateSubjectCode != null">
+        undergraduate_subject_code,
+      </if>
+      <if test="undergraduateSubjectName != null">
+        undergraduate_subject_name,
+      </if>
+      <if test="undergraduateSchoolName != null">
+        undergraduate_school_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="undergraduateClassCode != null">
+        #{undergraduateClassCode,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateClassName != null">
+        #{undergraduateClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateSubjectCode != null">
+        #{undergraduateSubjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateSubjectName != null">
+        #{undergraduateSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateSchoolName != null">
+        #{undergraduateSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longbig.multifunction.up.UndergraduateSchoolMapping">
+    <!--@mbg.generated-->
+    update undergraduate_school_mapping
+    <set>
+      <if test="undergraduateClassCode != null">
+        undergraduate_class_code = #{undergraduateClassCode,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateClassName != null">
+        undergraduate_class_name = #{undergraduateClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateSubjectCode != null">
+        undergraduate_subject_code = #{undergraduateSubjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateSubjectName != null">
+        undergraduate_subject_name = #{undergraduateSubjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="undergraduateSchoolName != null">
+        undergraduate_school_name = #{undergraduateSchoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longbig.multifunction.up.UndergraduateSchoolMapping">
+    <!--@mbg.generated-->
+    update undergraduate_school_mapping
+    set undergraduate_class_code = #{undergraduateClassCode,jdbcType=VARCHAR},
+      undergraduate_class_name = #{undergraduateClassName,jdbcType=VARCHAR},
+      undergraduate_subject_code = #{undergraduateSubjectCode,jdbcType=VARCHAR},
+      undergraduate_subject_name = #{undergraduateSubjectName,jdbcType=VARCHAR},
+      undergraduate_school_name = #{undergraduateSchoolName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

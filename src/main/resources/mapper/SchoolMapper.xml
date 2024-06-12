@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.longbig.multifunction.up.mapper.SchoolMapper">
+  <resultMap id="BaseResultMap" type="com.longbig.multifunction.up.School">
+    <!--@mbg.generated-->
+    <!--@Table school-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="subject_name" jdbcType="VARCHAR" property="subjectName" />
+    <result column="exam_a" jdbcType="VARCHAR" property="examA" />
+    <result column="exam_b" jdbcType="VARCHAR" property="examB" />
+    <result column="subject_exam" jdbcType="VARCHAR" property="subjectExam" />
+    <result column="extend_exam" jdbcType="VARCHAR" property="extendExam" />
+    <result column="exam_num_2024" jdbcType="VARCHAR" property="examNum2024" />
+    <result column="exam_pass_num_2024" jdbcType="VARCHAR" property="examPassNum2024" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, code, `name`, subject_name, exam_a, exam_b, subject_exam, extend_exam, exam_num_2024, 
+    exam_pass_num_2024, create_time, update_time, deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from school
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from school
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.longbig.multifunction.up.School" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into school (code, `name`, subject_name, 
+      exam_a, exam_b, subject_exam, 
+      extend_exam, exam_num_2024, exam_pass_num_2024, 
+      create_time, update_time, deleted
+      )
+    values (#{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{subjectName,jdbcType=VARCHAR}, 
+      #{examA,jdbcType=VARCHAR}, #{examB,jdbcType=VARCHAR}, #{subjectExam,jdbcType=VARCHAR}, 
+      #{extendExam,jdbcType=VARCHAR}, #{examNum2024,jdbcType=VARCHAR}, #{examPassNum2024,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.longbig.multifunction.up.School" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into school
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="subjectName != null">
+        subject_name,
+      </if>
+      <if test="examA != null">
+        exam_a,
+      </if>
+      <if test="examB != null">
+        exam_b,
+      </if>
+      <if test="subjectExam != null">
+        subject_exam,
+      </if>
+      <if test="extendExam != null">
+        extend_exam,
+      </if>
+      <if test="examNum2024 != null">
+        exam_num_2024,
+      </if>
+      <if test="examPassNum2024 != null">
+        exam_pass_num_2024,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="examA != null">
+        #{examA,jdbcType=VARCHAR},
+      </if>
+      <if test="examB != null">
+        #{examB,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectExam != null">
+        #{subjectExam,jdbcType=VARCHAR},
+      </if>
+      <if test="extendExam != null">
+        #{extendExam,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum2024 != null">
+        #{examNum2024,jdbcType=VARCHAR},
+      </if>
+      <if test="examPassNum2024 != null">
+        #{examPassNum2024,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.longbig.multifunction.up.School">
+    <!--@mbg.generated-->
+    update school
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null">
+        subject_name = #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="examA != null">
+        exam_a = #{examA,jdbcType=VARCHAR},
+      </if>
+      <if test="examB != null">
+        exam_b = #{examB,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectExam != null">
+        subject_exam = #{subjectExam,jdbcType=VARCHAR},
+      </if>
+      <if test="extendExam != null">
+        extend_exam = #{extendExam,jdbcType=VARCHAR},
+      </if>
+      <if test="examNum2024 != null">
+        exam_num_2024 = #{examNum2024,jdbcType=VARCHAR},
+      </if>
+      <if test="examPassNum2024 != null">
+        exam_pass_num_2024 = #{examPassNum2024,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.longbig.multifunction.up.School">
+    <!--@mbg.generated-->
+    update school
+    set code = #{code,jdbcType=VARCHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      subject_name = #{subjectName,jdbcType=VARCHAR},
+      exam_a = #{examA,jdbcType=VARCHAR},
+      exam_b = #{examB,jdbcType=VARCHAR},
+      subject_exam = #{subjectExam,jdbcType=VARCHAR},
+      extend_exam = #{extendExam,jdbcType=VARCHAR},
+      exam_num_2024 = #{examNum2024,jdbcType=VARCHAR},
+      exam_pass_num_2024 = #{examPassNum2024,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
