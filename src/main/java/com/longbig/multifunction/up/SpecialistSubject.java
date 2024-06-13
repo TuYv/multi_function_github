@@ -7,19 +7,24 @@ public class SpecialistSubject {
     private Integer id;
 
     /**
-    * 专业类名称
-    */
+     * 专业类名称
+     */
     private String className;
 
     /**
-    * 专业名称
-    */
+     * 专业名称
+     */
     private String name;
 
     /**
-    * 专业code
-    */
+     * 专业code
+     */
     private String code;
+
+    /**
+     * 专业类code
+     */
+    private String classCode;
 
     public Integer getId() {
         return id;
@@ -51,5 +56,13 @@ public class SpecialistSubject {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getClassCode() {
+        return classCode;
+    }
+
+    public void setClassCode(String classCode) {
+        this.classCode = classCode;
     }
 }

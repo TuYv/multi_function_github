@@ -5,13 +5,15 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
 * 专科专业表(specialist_subject)表控制层
 *
 * @author xxxxx
 */
 @RestController
-@RequestMapping("/specialist_subject")
+@RequestMapping("/specialistSubject")
 public class SpecialistSubjectController {
 /**
 * 服务对象
@@ -28,6 +30,16 @@ public class SpecialistSubjectController {
     @GetMapping("selectOne")
     public SpecialistSubject selectOne(Integer id) {
     return specialistSubjectService.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 模糊查询专业类
+     * @param keyword
+     * @return
+     */
+    @GetMapping("queryByKey")
+    public List<SpecialistSubject> queryByKeyword(String keyword) {
+        return specialistSubjectService.queryByKeyword(keyword);
     }
 
 }

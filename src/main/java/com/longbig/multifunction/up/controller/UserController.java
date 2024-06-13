@@ -26,7 +26,7 @@ public class UserController {
     * @return 单条数据
     */
     @GetMapping("selectOne")
-    public User selectOne(Integer id) {
+    public User selectOne(Long id) {
     return userService.selectByPrimaryKey(id);
     }
 

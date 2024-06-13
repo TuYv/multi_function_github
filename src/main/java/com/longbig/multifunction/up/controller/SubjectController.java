@@ -26,7 +26,7 @@ public class SubjectController {
     * @return 单条数据
     */
     @GetMapping("selectOne")
-    public Subject selectOne(Integer id) {
+    public Subject selectOne(Long id) {
     return subjectService.selectByPrimaryKey(id);
     }
 

@@ -18,6 +18,7 @@
     id, undergraduate_code, undergraduate_name, specialist_code, specialist_name, create_time, 
     update_time, deleted
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
     select 
@@ -129,4 +130,8 @@
       deleted = #{deleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select * from subject_mapping
+  </select>
 </mapper>

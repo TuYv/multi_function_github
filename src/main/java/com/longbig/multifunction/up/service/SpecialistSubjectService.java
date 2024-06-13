@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.longbig.multifunction.up.SpecialistSubject;
 import com.longbig.multifunction.up.mapper.SpecialistSubjectMapper;
+
+import java.util.List;
+
 @Service
 public class SpecialistSubjectService{
 
@@ -40,6 +43,10 @@ public class SpecialistSubjectService{
     
     public int updateByPrimaryKey(SpecialistSubject record) {
         return specialistSubjectMapper.updateByPrimaryKey(record);
+    }
+
+    public List<SpecialistSubject> queryByKeyword(String key) {
+        return specialistSubjectMapper.queryByKeyword(key);
     }
 
 }

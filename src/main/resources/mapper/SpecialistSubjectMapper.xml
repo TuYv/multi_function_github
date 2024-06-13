@@ -82,4 +82,13 @@
       code = #{code,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByKeyword" resultMap="BaseResultMap">
+    select * from specialist_subject where name like '%' + #{keyword,jdbcType=VARCHAR} + '%'
+    </select>
+  
+  <select id="queryAll" resultMap="BaseResultMap">
+    select *
+    from specialist_subject;
+  </select>
 </mapper>

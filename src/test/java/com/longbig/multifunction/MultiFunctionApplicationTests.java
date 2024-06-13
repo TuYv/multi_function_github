@@ -4,8 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.longbig.multifunction.job.JuHeJob;
 import com.longbig.multifunction.job.JuejinJob;
+import com.longbig.multifunction.up.SpecialistSubject;
+import com.longbig.multifunction.up.SubjectMapping;
+import com.longbig.multifunction.up.mapper.SpecialistSubjectMapper;
+import com.longbig.multifunction.up.mapper.SubjectMappingMapper;
 import com.longbig.multifunction.utils.OkHttpUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
@@ -25,6 +33,26 @@ public class MultiFunctionApplicationTests {
     private String weatherForecastKey;
     @Resource JuejinJob juejinJob;
     @Resource JuHeJob juHeJob;
+    @Resource SpecialistSubjectMapper specialistSubjectMapper;
+    @Resource SubjectMappingMapper subjectMappingMapper;
+
+    @Test
+    public void weatherTest() throws Exception {
+        List<SubjectMapping> subjectMappingList = subjectMappingMapper.queryAll();
+        Map<String, String> sMap = subjectMappingList.stream().collect(Collectors.toMap(SubjectMapping::getSpecialistName, SubjectMapping::getSpecialistCode, (o1, o2) -> o1));
+        List<SpecialistSubject> specialistSubjectList = specialistSubjectMapper.queryAll();
+        List<SpecialistSubject> empytList = new ArrayList<>();
+        for (SpecialistSubject sSubject : specialistSubjectList) {
+            if (sMap.containsKey(sSubject.getClassName())) {
+                sSubject.setClassCode(sMap.get(sSubject.getCode()));
+                specialistSubjectMapper.updateByPrimaryKeySelective(sSubject);
+            } else {
+                empytList.add(sSubject);
+            }
+        }
+        System.out.println(JSON.toJSONString(empytList));
+
+    }
     @Test
     public void juejinSign() throws Exception {
         System.out.println(JSON.toJSONString(juejinJob.juejinSign()));
@@ -53,10 +81,6 @@ public class MultiFunctionApplicationTests {
         Map<String, String> header = Maps.newHashMap();
         String url = "https://api.juejin.cn/growth_api/v1/get_cur_point";
         String response = OkHttpUtils.get(url, juejinCookie, header);
-    }
-    @Test
-    public void weatherTest() throws Exception {
-        juHeJob.dailyWeather(null);
     }
 
 
