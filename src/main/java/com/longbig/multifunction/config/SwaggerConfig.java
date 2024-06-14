@@ -21,7 +21,7 @@ public class SwaggerConfig {
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.longbig.multifunction"))
+                .apis(RequestHandlerSelectors.basePackage("com.longbig.multifunction.up"))
                 .paths(PathSelectors.any())
                 .build();
         docket.enable(true);
@@ -32,7 +32,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()
                 .title("工具系统接口文档")
                 .description("powered by longbig")
-                .termsOfServiceUrl("http://localhost:8080/doc.html")
+                .termsOfServiceUrl("http://localhost:18080/doc.html")
                 .contact("dnboy985@gmail.com")
                 .version("1.0")
                 .build();

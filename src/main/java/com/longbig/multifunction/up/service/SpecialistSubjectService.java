@@ -1,5 +1,8 @@
 package com.longbig.multifunction.up.service;
 
+import com.longbig.multifunction.up.SubjectClassDTO;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +48,12 @@ public class SpecialistSubjectService{
         return specialistSubjectMapper.updateByPrimaryKey(record);
     }
 
-    public List<SpecialistSubject> queryByKeyword(String key) {
-        return specialistSubjectMapper.queryByKeyword(key);
+    public Set<SubjectClassDTO> queryByKeyword(String key) {
+        List<SpecialistSubject> sSubjectList = specialistSubjectMapper.queryByKeyword(key);
+        Set<SubjectClassDTO> classDTOSet = sSubjectList.stream()
+            .map(SubjectClassDTO::from)
+            .collect(Collectors.toSet());
+        return classDTOSet;
     }
 
 }

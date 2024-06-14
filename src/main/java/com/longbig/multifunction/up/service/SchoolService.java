@@ -1,5 +1,6 @@
 package com.longbig.multifunction.up.service;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,10 @@ public class SchoolService{
     
     public int updateByPrimaryKey(School record) {
         return schoolMapper.updateByPrimaryKey(record);
+    }
+
+    public List<School> queryByClassName(String className) {
+        return schoolMapper.queryByClassName(className);
     }
 
 }

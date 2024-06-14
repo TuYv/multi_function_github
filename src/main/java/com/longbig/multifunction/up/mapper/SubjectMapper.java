@@ -1,7 +1,9 @@
 package com.longbig.multifunction.up.mapper;
 
 import com.longbig.multifunction.up.Subject;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface SubjectMapper {
     int deleteByPrimaryKey(Long id);
 

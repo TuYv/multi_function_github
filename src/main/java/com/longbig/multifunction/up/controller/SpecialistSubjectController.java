@@ -1,6 +1,8 @@
 package com.longbig.multifunction.up.controller;
 import com.longbig.multifunction.up.SpecialistSubject;
+import com.longbig.multifunction.up.SubjectClassDTO;
 import com.longbig.multifunction.up.service.SpecialistSubjectService;
+import java.util.Set;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class SpecialistSubjectController {
      * @return
      */
     @GetMapping("queryByKey")
-    public List<SpecialistSubject> queryByKeyword(String keyword) {
+    public Set<SubjectClassDTO> queryByKeyword(@RequestParam("keyword") String keyword) {
         return specialistSubjectService.queryByKeyword(keyword);
     }
 

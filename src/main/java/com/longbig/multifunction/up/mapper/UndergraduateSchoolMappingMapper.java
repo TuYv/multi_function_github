@@ -1,7 +1,9 @@
 package com.longbig.multifunction.up.mapper;
 
 import com.longbig.multifunction.up.UndergraduateSchoolMapping;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UndergraduateSchoolMappingMapper {
     int deleteByPrimaryKey(Integer id);
 

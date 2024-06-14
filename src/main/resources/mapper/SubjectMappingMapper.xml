@@ -132,6 +132,22 @@
   </update>
 
   <select id="queryAll" resultMap="BaseResultMap">
-    select * from subject_mapping
+    select
+    <include refid="Base_Column_List" />
+    from subject_mapping
+  </select>
+
+  <select id="queryMappingBySpecialistCode" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from subject_mapping
+    where specialist_code = #{specialistCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryMappingBySpecialistName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from subject_mapping
+    where specialist_name = #{specialistName,jdbcType=VARCHAR}
   </select>
 </mapper>

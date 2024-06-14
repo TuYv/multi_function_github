@@ -59,7 +59,7 @@ public class JuejinJob {
      *
      * @return
      */
-    @Scheduled(cron = "0 0 9,11 * * ?")
+    @Scheduled(cron = "0 01 9 * * ?")
     public String juejinDraw() throws Exception {
         log.info("掘金自动抽奖开始");
         Integer beforePoint = getCurPoint();
@@ -72,7 +72,7 @@ public class JuejinJob {
         String lottery_name = (String) JSON.parseObject(JSON.toJSONString(data)).get("lottery_name");
         Integer afterPoint = getCurPoint();
         weChatService.sendMsg(DateUtil.now() + "抽奖奖品:" + lottery_name
-            + "\br抽奖结果:" + beforePoint + " -> " + afterPoint, drawToUser);
+            + "\n抽奖结果:" + beforePoint + " -> " + afterPoint, drawToUser);
         return response;
     }
 
@@ -105,7 +105,7 @@ public class JuejinJob {
     }
 
 
-    @Scheduled(cron = "0 01 9 1/1 * ?")
+    @Scheduled(cron = "0 03 9 1/1 * ?")
     public void collectBugs() throws Exception {
         log.info("掘金bug收集");
         JSONArray bugList = this.getBugList();

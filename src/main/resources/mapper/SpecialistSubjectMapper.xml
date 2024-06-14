@@ -84,7 +84,8 @@
   </update>
 
   <select id="queryByKeyword" resultMap="BaseResultMap">
-    select * from specialist_subject where name like '%' + #{keyword,jdbcType=VARCHAR} + '%'
+    select <include refid="Base_Column_List" />
+    from specialist_subject where name like CONCAT('%',#{keyword},'%')
     </select>
   
   <select id="queryAll" resultMap="BaseResultMap">

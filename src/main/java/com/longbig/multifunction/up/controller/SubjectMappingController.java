@@ -1,7 +1,9 @@
 package com.longbig.multifunction.up.controller;
 import com.longbig.multifunction.up.Subject;
+import com.longbig.multifunction.up.SubjectClassDTO;
 import com.longbig.multifunction.up.SubjectMapping;
 import com.longbig.multifunction.up.service.SubjectMappingService;
+import java.util.Set;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,14 @@ public class SubjectMappingController {
     return subjectMappingService.selectByPrimaryKey(id);
     }
 
-//    /**
-//     * 模糊查询专业
-//     * @param keyWord
-//     * @return
-//     */
-//    public List<Subject> getSubject(String keyWord) {
-//
-//    }
+    /**
+     * 根据专科类查询关联的本科类
+     * @param classDTO
+     * @return
+     */
+    @PostMapping("queryMappingBySpecialist")
+    public Set<SubjectClassDTO> queryMappingBySpecialist(@RequestBody SubjectClassDTO classDTO) {
+        return subjectMappingService.queryMappingBySpecialist(classDTO);
+    }
 
 }

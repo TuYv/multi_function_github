@@ -188,4 +188,11 @@
       deleted = #{deleted,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryByClassName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from school
+    where `subject_name` = #{className,jdbcType=VARCHAR}
+  </select>
 </mapper>

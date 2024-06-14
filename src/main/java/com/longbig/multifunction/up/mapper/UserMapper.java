@@ -1,7 +1,9 @@
 package com.longbig.multifunction.up.mapper;
 
 import com.longbig.multifunction.up.User;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface UserMapper {
     int deleteByPrimaryKey(Long id);
 
