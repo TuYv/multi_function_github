@@ -1,5 +1,7 @@
 package com.longbig.multifunction.up;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
@@ -11,46 +13,55 @@ public class School {
     /**
     * 院校code
     */
+    @ApiModelProperty("院校code")
     private String code;
 
     /**
     * 院校名称
     */
+    @ApiModelProperty("院校名称")
     private String name;
 
     /**
     * 专业名称
     */
+    @ApiModelProperty("专业名称")
     private String subjectName;
 
     /**
     * 统考科目1
     */
+    @ApiModelProperty("统考科目1")
     private String examA;
 
     /**
     * 统考科目2
     */
+    @ApiModelProperty("统考科目2")
     private String examB;
 
     /**
     * 专业综合科目
     */
+    @ApiModelProperty("专业综合科目")
     private String subjectExam;
 
     /**
     * 加试科目
     */
+    @ApiModelProperty("加试科目")
     private String extendExam;
 
     /**
     * 2024报考人数
     */
+    @ApiModelProperty("2024报考人数")
     private String examNum2024;
 
     /**
     * 2024录取人数
     */
+    @ApiModelProperty("2024录取人数")
     private String examPassNum2024;
 
     /**
