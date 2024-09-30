@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 *
 * @author xxxxx
 */
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {

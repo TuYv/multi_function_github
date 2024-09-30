@@ -2,7 +2,10 @@ package com.longbig.multifunction.up.mapper;
 
 import com.longbig.multifunction.up.School;
 import java.util.List;
+import java.util.Set;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SchoolMapper {
@@ -18,5 +21,7 @@ public interface SchoolMapper {
 
     int updateByPrimaryKey(School record);
 
-    List<School> queryByClassName(String className);
+    School queryBySubjectAndName(@Param("subjectName") String subjectName,@Param("name") String name);
+
+    List<School> queryBySchoolName(@Param("list") Set<String> list);
 }

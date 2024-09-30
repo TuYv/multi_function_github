@@ -14,6 +14,7 @@ import java.util.List;
 *
 * @author xxxxx
 */
+@CrossOrigin
 @RestController
 @RequestMapping("/specialistSubject")
 public class SpecialistSubjectController {

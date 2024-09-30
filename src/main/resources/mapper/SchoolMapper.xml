@@ -189,10 +189,20 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="queryByClassName" resultMap="BaseResultMap">
+  <select id="queryBySubjectAndName" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from school
-    where `subject_name` = #{className,jdbcType=VARCHAR}
+    where `subject_name` = #{subjectName,jdbcType=VARCHAR}
+    and name = #{name, jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryBySchoolName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from school
+    where name in
+    <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
   </select>
 </mapper>

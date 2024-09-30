@@ -1,17 +1,27 @@
 package com.longbig.multifunction.up.service;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import cn.hutool.core.collection.CollectionUtil;
+import com.longbig.multifunction.up.UndergraduateSchoolMapping;
+import com.longbig.multifunction.up.mapper.UndergraduateSchoolMappingMapper;
 import org.springframework.stereotype.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.longbig.multifunction.up.School;
 import com.longbig.multifunction.up.mapper.SchoolMapper;
+
+import javax.annotation.Resource;
+
 @Service
 public class SchoolService{
 
     @Autowired
     private SchoolMapper schoolMapper;
+    @Resource private UndergraduateSchoolMappingMapper undergraduateSchoolMappingMapper;
 
     
     public int deleteByPrimaryKey(Integer id) {
@@ -43,8 +53,21 @@ public class SchoolService{
         return schoolMapper.updateByPrimaryKey(record);
     }
 
+
+    /**
+     * 根据关联表绕一圈
+     * @param className
+     * @return
+     */
     public List<School> queryByClassName(String className) {
-        return schoolMapper.queryByClassName(className);
+        List<UndergraduateSchoolMapping> schoolMappingList = undergraduateSchoolMappingMapper.queryByClassName(className);
+        if (CollectionUtil.isNotEmpty(schoolMappingList)) {
+            return schoolMappingList.stream()
+                    .map(mapping -> schoolMapper.queryBySubjectAndName(mapping.getUndergraduateSubjectName(), mapping.getUndergraduateSchoolName()))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList());
+        }
+        return Collections.EMPTY_LIST;
     }
 
 }

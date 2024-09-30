@@ -10,7 +10,7 @@ APP_START_TIMEOUT=20    # 等待应用启动的时间
 APP_PORT=18080          # 应用端口
 HEALTH_CHECK_URL=http://127.0.0.1:${APP_PORT}/checkHealth  # 应用健康检查URL
 APP_HOME=/usr/local/multi_function_github # 从package.tgz中解压出来的jar包放到这个目录下
-JAR_NAME=${APP_HOME}/target/${APP_NAME}.jar # jar包的名字
+JAR_NAME=${APP_HOME}/${APP_NAME}.jar # jar包的名字
 JAVA_OUT=${APP_HOME}/logs/start.log  #应用的启动日志
 
 # 创建出相关目录

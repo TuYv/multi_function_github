@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 *
 * @author xxxxx
 */
+@CrossOrigin
 @RestController
 @RequestMapping("/undergraduate_subject")
 public class UndergraduateSubjectController {

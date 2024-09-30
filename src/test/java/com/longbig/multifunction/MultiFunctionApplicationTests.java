@@ -53,7 +53,7 @@ public class MultiFunctionApplicationTests {
         List<SpecialistSubject> empytList = new ArrayList<>();
         for (SpecialistSubject sSubject : specialistSubjectList) {
             if (sMap.containsKey(sSubject.getClassName())) {
-                sSubject.setClassCode(sMap.get(sSubject.getCode()));
+                sSubject.setClassCode(sMap.get(sSubject.getClassName()));
                 specialistSubjectMapper.updateByPrimaryKeySelective(sSubject);
             } else {
                 empytList.add(sSubject);
